@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>My Awesome Login Page</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <script src="/static/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+    <style type="text/css">
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #fafafa;
+        }
+        .login-form {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+        .login-form .login-form-head {
+            margin-bottom: 10px;
+            text-align: center;
+            font-style: italic;
+        }
+        .login-form .form-control {
+            position: relative;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .login-form .form-control:focus {
+            z-index: 2;
+        }
+        #login-email {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 3px;
+            border-top-left-radius: 3px;
+            width: 302px;
+            border-bottom-color: white;
+        }
+        #login-password {
+            margin-bottom: -1px;
+            margin-top: 1px;
+            border-radius: 0px;
+            width: 302px;
+            border-bottom-color: white;
+            border-top-width: 0px;
+        }
+        .btn-block {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+            width: 302px;
+            background-color: #bc204b;
+            border-color: #a30732;
+        }
+        .btn-block:hover,
+        .btn-block:focus,
+        .btn-block:active,
+        .btn-block.active,
+        .open .dropdown-toggle.btn-block {
+            background-color: rgba(188,32,75, 0.8);
+            border-color: rgba(163,7,50, 0.8);
+        }
+        .btn-block:hover,
+        .btn-block:focus,
+        .btn-block:active,
+        .btn-block.active,
+        .open .dropdown-toggle.btn-block {} .g-recaptcha {
+            margin-top: 17px;
+            box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.08);
+            height: 70px;
+        }
+        textarea:focus,
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="datetime"]:focus,
+        input[type="datetime-local"]:focus,
+        input[type="date"]:focus,
+        input[type="month"]:focus,
+        input[type="time"]:focus,
+        input[type="week"]:focus,
+        input[type="number"]:focus,
+        input[type="email"]:focus,
+        input[type="url"]:focus,
+        input[type="search"]:focus,
+        input[type="tel"]:focus,
+        input[type="color"]:focus,
+        .uneditable-input:focus {
+            border-color: rgba(188,32,75, 0.95);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(188,32,75, 0.6);
+            outline: 0 none;
+        }
+        .btn-primary.disabled,
+        .btn-primary.disabled.active,
+        .btn-primary.disabled.focus,
+        .btn-primary.disabled:active,
+        .btn-primary.disabled:focus,
+        .btn-primary.disabled:hover,
+        .btn-primary[disabled],
+        .btn-primary.active[disabled],
+        .btn-primary.focus[disabled],
+        .btn-primary[disabled]:active,
+        .btn-primary[disabled]:focus,
+        .btn-primary[disabled]:hover,
+        fieldset[disabled] .btn-primary,
+        fieldset[disabled] .btn-primary.active,
+        fieldset[disabled] .btn-primary.focus,
+        fieldset[disabled] .btn-primary:active,
+        fieldset[disabled] .btn-primary:focus,
+        fieldset[disabled] .btn-primary:hover {
+            border-color: rgba(188,32,75, 0.85);
+            background-color: rgba(188,32,75, 0.85);
+            border-color: rgba(188,32,75, 0.85);
+        }
+    </style>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+
+<body>
+    <div class="container">
+        <form class="login-form">
+            <h2 class="login-form-head">Login:</h2>
+            <h5 style="" id="login-error"></h5>
+            <div class="g-recaptcha" data-callback="ok" data-expired-callback="expired" data-sitekey=""></div>
+            <div style="box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.08); margin-top:17px;">
+                <input type="email" name="email" id="login-email" class="form-control" placeholder="Email" required>
+                <input type="password" name="password" id="login-password" class="form-control" placeholder="Password" required autocomplete="off">
+                <button class="btn btn-lg btn-primary btn-block" id="login-submit">Login →</button>
+            </div>
+        </form>
+    </div>
+    <!-- /container -->
+    <script type="text/javascript">
+        $("#login-submit").attr("disabled", false);
+
+        var recaptchaTry = "";
+        var recaptchaOk = false;
+
+        function ok(response) {
+            recaptchaOk = true;
+            recaptchaTry = response;
+            if (($("#login-email").val().trim() != "")) {
+                $("#login-error").hide();
+            };
+        }
+
+        function expired(response) {
+            recaptchaOk = false;
+            recaptchaTry = "";
+            grecaptcha.reset();
+        }
+
+        $(document).on("click", "#login-submit", function (e) {
+            e.preventDefault();
+            $("#login-error").attr("style", "").html("");
+
+            if ($("#login-email").val().trim() != "" && $("#login-password").val().trim() != "" && recaptchaTry != "" && recaptchaOk == true) {
+
+                $("#login-submit").attr("disabled", true).html("Checking...");
+                $.ajax({
+                    type: "POST",
+                    url: "/user/login",
+                    data: {
+                        email: $("#login-email").val(),
+                        password: $("#login-password").val(),
+                        recaptchaTry: recaptchaTry,
+                        r: 3251734
+                    },
+                    success: function (successResponse) {
+                        $("#login-error").hide();
+                        $("#login-submit").hide().html(successResponse.response).fadeIn("slow");
+                        setTimeout(function() { 
+                          window.location.href = successResponse.url;
+                        },1100)
+                    },
+                    error: function (errorResponse) {
+                        grecaptcha.reset();
+                        $("#login-submit").hide().html("Error. Click to retry.").attr("disabled", false).fadeIn();
+                        $("#login-error").hide().css("color", "red").html(errorResponse.responseJSON.error).fadeIn();
+                    }
+                });
+
+            } else {
+                $("#login-error").hide().css("color", "red").html("Please complete all fields").fadeIn();
+            }
+        });
+    </script>   
+</body>
+
+</html>
