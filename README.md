@@ -3,9 +3,9 @@
 ### Installation
 
 Get your recaptcha keys:
-	+ Visit https://www.google.com/recaptcha/admin#list
-	+ Add a label (e.g. "example.com's recaptcha")
-	+ Add domains (e.g. "127.0.0.1" and/or "example.com")
++ Visit https://www.google.com/recaptcha/admin#list
++ Add a label (e.g. "example.com's recaptcha")
++ Add domains (e.g. "127.0.0.1" and/or "example.com")
 
 Now you have a "site key" and a "secret key".
 
@@ -30,9 +30,9 @@ go run main.go
 ```
 
 In your browser:
-	+ Go to http://127.0.0.1:8080/user/login
-	+ Click on "I'm not a robot"
-	+ Solve the puzzle (if prompted)
-	+ Enter any email and password
-	+ Click on the "Login" button
-	+ Wait to be redirected to http://127.0.0.1:8080/user/r/dashboard
++ Go to http://127.0.0.1:8080/user/login
++ Click on "I'm not a robot"
++ Solve the puzzle (if prompted)
++ Enter any email and password
++ Click on the "Login" button
++ Wait to be redirected to http://127.0.0.1:8080/user/r/dashboard
