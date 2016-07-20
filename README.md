@@ -1,4 +1,4 @@
-### Complete Golang Gin login page with Recaptcha and JWT
+## Complete Golang Gin login page with Recaptcha and JWT
 
 ### Installation
 
