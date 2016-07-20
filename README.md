@@ -19,7 +19,7 @@ $ export SERVER_PORT=:8080 # ":8080" in debug mode; "" in production
 $ export SSL_ENABLED=false # false in debug mode; true in production
 ```
 
-Inside `login.html` (line 140), add your site key.
+Inside `login.html` (line 140), add your site key (`data-sitekey`) value.
 
 Inside `main.go`, inside the `checkLoginCredentials` function, add a call to your db to validate the user and password.
 
